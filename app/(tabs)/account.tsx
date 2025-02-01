@@ -8,6 +8,7 @@ import 'firebase/firestore';
 import { UserContext } from '@/context/UserContext';
 import LoginForm from '@/components/account/LoginForm';
 import SignUpForm from '@/components/account/SignupForm';
+import { router } from 'expo-router';
 
 export default function AccountTab() {
 
@@ -20,7 +21,7 @@ export default function AccountTab() {
       <View style={styles.container}>
         <Text style={styles.title}>Mon compte</Text>
         <Text style={styles.subtitle}>Bienvenue {user.email}</Text>
-        <Button title="Se déconnecter" onPress={() => auth.signOut()} />
+        <Button title="Se déconnecter" onPress={() => { auth.signOut(); router.reload() } } />
       </View>
     );
   }
@@ -31,8 +32,9 @@ export default function AccountTab() {
       style={styles.container}
     >
       {formState ? <LoginForm /> : <SignUpForm />}
+      <View style={{borderBottomWidth: 1, marginBottom: 20, marginTop: 5, marginHorizontal:25, borderColor: 'gray' }}></View>
       <View style={styles.subContainer}>
-        <Text>{!formState ? 'Déjà un compte ? ' : 'Pas encore de compte ? '}
+        <Text style={{fontSize:15}}>{!formState ? 'Déjà un compte ? ' : 'Pas encore de compte ? '}
           <Text style={styles.link} onPress={e => {setFormState(!formState)}}>{!formState ? 'Se connecter' : 'S\'inscrire'}</Text>
         </Text>
       </View>
@@ -52,13 +54,14 @@ const styles = StyleSheet.create({
   },
   link: {
     color: 'blue',
+    fontSize: 15,
   },
   title: {
     fontSize: 24,
     fontWeight: 'bold',
   },
   subtitle: {
-    fontSize: 16,
+    fontSize: 20,
     color: 'gray',
   },
 });

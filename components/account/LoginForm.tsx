@@ -4,7 +4,7 @@ import { signInWithEmailAndPassword } from "firebase/auth";
 import { useState, useContext } from "react";
 import { View, Text, TextInput, StyleSheet, Alert, ScrollView, KeyboardAvoidingView, Platform } from 'react-native';
 import Button from "../Button";
-import { Link } from "expo-router";
+import { Link, router } from "expo-router";
 
 export default function LoginForm() {
   const [email, setEmail] = useState<string>('');
@@ -26,6 +26,7 @@ export default function LoginForm() {
         //   Alert.alert("Profil non trouvé", "Aucun profil n'a été trouvé pour cet utilisateur.");
         // }
       }
+      router.reload();
     } catch (error) {
       console.error("Erreur de connexion :", error);
       Alert.alert("Erreur", "La connexion a échoué. Vérifiez vos identifiants.");

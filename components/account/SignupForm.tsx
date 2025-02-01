@@ -32,7 +32,7 @@ export default function SignUpForm() {
   return (
       <View style={styles.scrollContainer}>
         <Text style={styles.title}>S'inscrire - Track & Shop</Text>
-        <Text style={styles.subtitle}>Accéder à votre profil</Text>
+        <Text style={styles.subtitle}>Bienvenue sur l'application !</Text>
         <TextInput
           style={styles.input}
           placeholder="Nom"
