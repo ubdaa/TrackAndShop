@@ -2,7 +2,7 @@ import { UserContext } from "@/context/UserContext";
 import { auth, db } from "@/firebaseConfig";
 import { signInWithEmailAndPassword } from "firebase/auth";
 import { useState, useContext } from "react";
-import { View, Text, TextInput, StyleSheet, Alert, ScrollView, KeyboardAvoidingView, Platform } from 'react-native';
+import { View, Text, TextInput, StyleSheet, Alert } from 'react-native';
 import Button from "../Button";
 import { Link, useRouter } from "expo-router";
 import { collection, getDocs } from "firebase/firestore";
@@ -10,7 +10,7 @@ import { collection, getDocs } from "firebase/firestore";
 export default function LoginForm() {
   const [email, setEmail] = useState<string>('');
   const [password, setPassword] = useState<string>('');
-  const { setUserProfile } = useContext(UserContext);
+  const { userProfile, setUserProfile } = useContext(UserContext);
   const router = useRouter();
 
   const handleLogin = async () => {

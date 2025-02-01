@@ -9,6 +9,7 @@ import { UserContext } from '@/context/UserContext';
 import LoginForm from '@/components/account/LoginForm';
 import SignUpForm from '@/components/account/SignupForm';
 import { router, useRouter } from 'expo-router';
+import AccountProfile from '@/components/account/AccountProfile';
 
 export default function AccountTab() {
 
@@ -19,11 +20,7 @@ export default function AccountTab() {
 
   if (user) {
     return (
-      <View style={styles.container}>
-        <Text style={styles.title}>Mon compte</Text>
-        <Text style={styles.subtitle}>Bienvenue {user.email}</Text>
-        <Button title="Se déconnecter" onPress={() => { auth.signOut(); router.replace("/(tabs)/account") } } />
-      </View>
+      <AccountProfile />
     );
   }
   

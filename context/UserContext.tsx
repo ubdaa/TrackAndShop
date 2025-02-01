@@ -18,7 +18,7 @@ export const UserContext = createContext<UserContextProps>({
   setUserProfile: () => {}
 });
 
-export const UserProvider: React.FC = ({ children }) => {
+export function UserProvider({ children }: { children: React.ReactNode }) {
   const [userProfile, setUserProfile] = useState<UserProfile | null>(null);
 
   return (
