@@ -1,12 +1,24 @@
-import React, { useEffect, useState } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import { Text, View, ActivityIndicator, ScrollView, StyleSheet } from 'react-native';
 import { db } from '@/firebaseConfig';
 import { getDocs, collection } from 'firebase/firestore';
 import { Article } from '@/constants/Articles';
 import ArticleCard from '@/components/home/ArticleCard';
+import { ShopContext } from '@/context/ShopContext';
 
 export default function Index() {
-  const [articles, setArticles] = useState<Article[]>([]);
+
+  const shopContext = useContext(ShopContext);
+
+  if (!shopContext) {
+    return (
+      <View style={styles.center}>
+        <Text>Shop context is not available.</Text>
+      </View>
+    );
+  }
+
+  const { articles, setArticles } = shopContext;
   const [loading, setLoading] = useState<boolean>(true);
   const [error, setError] = useState<string | null>(null);
 
@@ -28,6 +40,7 @@ export default function Index() {
     };
 
     fetchArticles();
+
   }, []);
 
   if (loading) {

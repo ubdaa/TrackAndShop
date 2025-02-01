@@ -12,7 +12,8 @@ export default function Layout() {
           <Stack.Screen
             name="product/[id]"
             options={{
-              presentation: 'containedModal',
+              presentation: 'modal',
+              headerTitle: 'Produit',
             }}
           />
         </Stack>

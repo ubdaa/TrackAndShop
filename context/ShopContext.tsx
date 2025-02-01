@@ -19,6 +19,7 @@ export interface CartItem {
 interface ShopContextType {
   articles: Article[];
   cart: CartItem[];
+  setArticles: (data: Article[]) => void;
   addToCart: (article: Article, quantity?: number) => void;
   removeFromCart: (id: string) => void;
   updateCartItem: (id: string, quantity: number) => void;
@@ -32,6 +33,8 @@ interface ShopProviderProps {
 }
 
 export const ShopProvider: React.FC<ShopProviderProps> = ({ children }) => {
+  
+  const [articles, setArticles] = useState<Article[]>([]);
   const [cart, setCart] = useState<CartItem[]>([]);
 
   const addToCart = (article: Article, quantity: number = 1) => {
@@ -65,12 +68,13 @@ export const ShopProvider: React.FC<ShopProviderProps> = ({ children }) => {
   };
 
   const value: ShopContextType = {
+    articles,
     cart,
+    setArticles,
     addToCart,
     removeFromCart,
     updateCartItem,
     clearCart,
-    articles: []
   };
 
   return (
