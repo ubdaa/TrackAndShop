@@ -8,7 +8,7 @@ export type TextProps = NativeTextProps & {
   type?: 'default' | 'title' | 'defaultSemiBold' | 'subtitle' | 'link';
 };
 
-export function Text({
+export default function Text({
   style,
   lightColor,
   darkColor,

@@ -1,17 +1,69 @@
-import { Camera } from "lucide-react-native";
-import { Text, View } from "react-native";
+import React, { useEffect, useState } from 'react';
+import { Text, View, ActivityIndicator, ScrollView, StyleSheet } from 'react-native';
+import { db } from '@/firebaseConfig';
+import { getDocs, collection } from 'firebase/firestore';
+import { Article } from '@/constants/Articles';
+import ArticleCard from '@/components/home/ArticleCard';
 
 export default function Index() {
+  const [articles, setArticles] = useState<Article[]>([]);
+  const [loading, setLoading] = useState<boolean>(true);
+  const [error, setError] = useState<string | null>(null);
+
+  useEffect(() => {
+    const fetchArticles = async () => {
+      try {
+        const querySnapshot = await getDocs(collection(db, 'articles'));
+        const articlesData: Article[] = querySnapshot.docs.map(doc => ({
+          ...doc.data(),
+          id: doc.id,
+        })) as Article[];
+        setArticles(articlesData);
+      } catch (err) {
+        console.error('Erreur lors de la récupération des articles:', err);
+        setError('Erreur lors de la récupération des articles.');
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchArticles();
+  }, []);
+
+  if (loading) {
+    return (
+      <View style={styles.center}>
+        <ActivityIndicator size="large" color="#3498db" />
+      </View>
+    );
+  }
+
+  if (error) {
+    return (
+      <View style={styles.center}>
+        <Text>{error}</Text>
+      </View>
+    );
+  }
+
   return (
-    <View
-      style={{
-        flex: 1,
-        justifyContent: "center",
-        alignItems: "center",
-      }}
-    >
-      <Text>Edit app/index.tsx to edit this screen.</Text>
-      <Camera color={"blue"} size={64} />
-    </View>
+    <ScrollView contentContainerStyle={styles.container}>
+      {articles.map(article => (
+        <ArticleCard key={article.id} article={article} />
+      ))}
+    </ScrollView>
   );
 }
+
+const styles = StyleSheet.create({
+  container: {
+    padding: 16,
+    flex: 2,
+    flexDirection: 'column',
+  },
+  center: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+});
