@@ -29,16 +29,25 @@ export default function TabLayout() {
       <Tabs.Screen
         name="index"
         options={{
-          title: "Home",
+          title: "Accueil",
           tabBarIcon: ({ color }) => (
             <FontAwesome size={28} name="home" color={color} />
           ),
         }}
       />
       <Tabs.Screen
+        name="cart"
+        options={{
+          title: "Pannier",
+          tabBarIcon: ({ color }) => (
+            <FontAwesome size={24} name="shopping-basket" color={color} />
+          ),
+        }}
+      />
+      <Tabs.Screen
         name="settings"
         options={{
-          title: "Settings",
+          title: "Paramètres",
           tabBarIcon: ({ color }) => (
             <FontAwesome size={28} name="cog" color={color} />
           ),
