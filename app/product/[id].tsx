@@ -84,7 +84,6 @@ export default function Index() {
         </View>
       </ScrollView>
 
-      {/* Footer fixe pour la quantité et l'ajout au panier */}
       <View style={styles.modalFooter}>
         <View style={styles.quantityContainer}>
           <TouchableOpacity onPress={decreaseQuantity} style={styles.quantityButton}>

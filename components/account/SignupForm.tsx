@@ -39,12 +39,14 @@ export default function SignUpForm() {
         <TextInput
           style={styles.input}
           placeholder="Nom"
+          placeholderTextColor={'#ccc'}
           value={name}
           onChangeText={setName}
         />
         <TextInput
           style={styles.input}
           placeholder="Email"
+          placeholderTextColor={'#ccc'}
           value={email}
           onChangeText={setEmail}
           autoCapitalize="none"
@@ -53,6 +55,7 @@ export default function SignUpForm() {
         <TextInput
           style={styles.input}
           placeholder="Mot de passe"
+          placeholderTextColor={'#ccc'}
           value={password}
           onChangeText={setPassword}
           secureTextEntry
@@ -81,6 +84,6 @@ const styles = StyleSheet.create({
     borderWidth: 1, 
     marginBottom: 15, 
     paddingHorizontal: 10, 
-    borderRadius: 15 
+    borderRadius: 15,
   }
 });

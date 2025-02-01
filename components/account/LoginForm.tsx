@@ -40,6 +40,7 @@ export default function LoginForm() {
         <TextInput
           style={styles.input}
           placeholder="Email"
+          placeholderTextColor={'#ccc'}
           value={email}
           onChangeText={setEmail}
           autoCapitalize="none"
@@ -48,6 +49,7 @@ export default function LoginForm() {
         <TextInput
           style={styles.input}
           placeholder="Mot de passe"
+          placeholderTextColor={'#ccc'}
           value={password}
           onChangeText={setPassword}
           secureTextEntry
