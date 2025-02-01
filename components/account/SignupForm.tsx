@@ -4,11 +4,13 @@ import { addDoc, collection } from "firebase/firestore";
 import { useState } from "react";
 import { Alert, Text, TextInput, StyleSheet, View } from "react-native";
 import Button from "../Button";
+import { useRouter } from "expo-router";
 
 export default function SignUpForm() {
   const [name, setName] = useState<string>('');
   const [email, setEmail] = useState<string>('');
   const [password, setPassword] = useState<string>('');
+  const router = useRouter();
 
   const handleSignUp = async () => {
     try {
@@ -23,6 +25,7 @@ export default function SignUpForm() {
         });
         Alert.alert("Inscription réussie", "Votre compte a été créé.");
       }
+      router.replace("/(tabs)/account");
     } catch (error: any) {
       console.error("Erreur d'inscription :", error);
       Alert.alert("Erreur", error.message);

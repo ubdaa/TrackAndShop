@@ -8,20 +8,21 @@ import 'firebase/firestore';
 import { UserContext } from '@/context/UserContext';
 import LoginForm from '@/components/account/LoginForm';
 import SignUpForm from '@/components/account/SignupForm';
-import { router } from 'expo-router';
+import { router, useRouter } from 'expo-router';
 
 export default function AccountTab() {
 
   const user = auth.currentUser;
 
-  const [formState, setFormState] = useState<Boolean>(false);
+  const [formState, setFormState] = useState<Boolean>(true);
+  const router = useRouter();
 
   if (user) {
     return (
       <View style={styles.container}>
         <Text style={styles.title}>Mon compte</Text>
         <Text style={styles.subtitle}>Bienvenue {user.email}</Text>
-        <Button title="Se déconnecter" onPress={() => { auth.signOut(); router.reload() } } />
+        <Button title="Se déconnecter" onPress={() => { auth.signOut(); router.replace("/(tabs)/account") } } />
       </View>
     );
   }

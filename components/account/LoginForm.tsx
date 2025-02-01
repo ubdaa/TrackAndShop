@@ -1,32 +1,32 @@
 import { UserContext } from "@/context/UserContext";
-import { auth } from "@/firebaseConfig";
+import { auth, db } from "@/firebaseConfig";
 import { signInWithEmailAndPassword } from "firebase/auth";
 import { useState, useContext } from "react";
 import { View, Text, TextInput, StyleSheet, Alert, ScrollView, KeyboardAvoidingView, Platform } from 'react-native';
 import Button from "../Button";
-import { Link, router } from "expo-router";
+import { Link, useRouter } from "expo-router";
+import { collection, getDocs } from "firebase/firestore";
 
 export default function LoginForm() {
   const [email, setEmail] = useState<string>('');
   const [password, setPassword] = useState<string>('');
   const { setUserProfile } = useContext(UserContext);
+  const router = useRouter();
 
   const handleLogin = async () => {
     try {
-      // Connexion avec Firebase Authentication
       const userCredential = await signInWithEmailAndPassword(auth, email, password);
       const uid = userCredential.user?.uid;
       if (uid) {
-        // Récupération du profil utilisateur depuis Firestore (collection "users")
-        // const userDoc = await firebase.firestore().collection('users').doc(uid).get();
-        // if (userDoc.exists) {
-        //   // Mettez à jour le contexte avec les données du profil
-        //   setUserProfile(userDoc.data());
-        // } else {
-        //   Alert.alert("Profil non trouvé", "Aucun profil n'a été trouvé pour cet utilisateur.");
-        // }
+        const querySnapshot = await getDocs(collection(db, "users"));
+        querySnapshot.forEach((doc) => {
+          const user = doc.data();
+          if (user.email === email) {
+            setUserProfile(user);
+          }
+        });
       }
-      router.reload();
+      router.replace("/(tabs)/account");
     } catch (error) {
       console.error("Erreur de connexion :", error);
       Alert.alert("Erreur", "La connexion a échoué. Vérifiez vos identifiants.");
