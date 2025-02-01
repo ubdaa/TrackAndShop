@@ -40,14 +40,14 @@ export default function TabLayout() {
         options={{
           title: "Pannier",
           tabBarIcon: ({ color }) => (
-            <FontAwesome size={24} name="shopping-basket" color={color} />
+            <FontAwesome size={22} name="shopping-basket" color={color} />
           ),
         }}
       />
       <Tabs.Screen
-        name="settings"
+        name="account"
         options={{
-          title: "Paramètres",
+          title: "Compte",
           tabBarIcon: ({ color }) => (
             <FontAwesome size={28} name="cog" color={color} />
           ),
