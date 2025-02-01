@@ -1,10 +1,12 @@
 import { UserContext } from "@/context/UserContext";
-import { auth } from "@/firebaseConfig";
+import { auth, db } from "@/firebaseConfig";
 import { useRouter } from "expo-router";
 import { signOut } from "firebase/auth";
 import { useContext } from "react";
 import { Alert, View, StyleSheet, Text } from "react-native";
 import Button from "../Button";
+import { addDoc, collection } from "firebase/firestore";
+import { Articles } from "@/constants/Articles";
 
 export default function AccountProfile() {
   const router = useRouter();
@@ -21,11 +23,23 @@ export default function AccountProfile() {
     }
   };
 
+  const handleDebug = async () => {
+    try {
+      Articles.forEach(async article => {
+        await addDoc(collection(db, "articles"), article);
+      });
+    } catch (error) {
+      console.error("Erreur de déconnexion :", error);
+      Alert.alert("Erreur", "La déconnexion a échoué. Veuillez réessayer.");
+    }
+  };
+
   return (
     <View style={styles.container}>
       <Text style={styles.title}>Mon compte</Text>
       <Text style={styles.subtitle}>Bienvenue {userProfile?.email}</Text>
       <Button title="Se déconnecter" onPress={handleLogout} />
+      {/* <Button title="Debug pour créer des articles" onPress={handleDebug} /> */}
     </View>
   );
 }
