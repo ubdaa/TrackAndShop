@@ -58,8 +58,6 @@ export default function Index() {
 const styles = StyleSheet.create({
   container: {
     padding: 16,
-    paddingTop: 60,
-    paddingBottom: 100,
   },
   center: {
     flex: 1,

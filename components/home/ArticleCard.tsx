@@ -2,12 +2,15 @@ import React from 'react';
 import { View, Text, Image, StyleSheet, TouchableOpacity, Dimensions } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
 import { Article } from '@/constants/Articles';
+import { useRouter } from 'expo-router';
 
 interface ArticleCardProps {
   article: Article;
 }
 
 export default function ArticleCard ({ article }: ArticleCardProps) {
+  const router = useRouter();
+
   const renderStars = (rating: number) => {
     const stars = [];
     for (let i = 1; i <= 5; i++) {
@@ -24,7 +27,7 @@ export default function ArticleCard ({ article }: ArticleCardProps) {
   };
 
   return (
-    <TouchableOpacity style={styles.cardContainer}>
+    <TouchableOpacity style={styles.cardContainer} onPress={() => router.push({ pathname: `/product/[id]`, params: { id: article.id } })}>
       <Image 
         source={{ uri: article.imageUrl }} 
         style={styles.image}
