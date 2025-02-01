@@ -1,17 +1,16 @@
-import { Camera } from "lucide-react-native";
+import { ShopContext } from "@/context/ShopContext";
+import { useContext } from "react";
 import { Text, View } from "react-native";
 
-export default function Index() {
+export default function Cart() {
+
+  const shopContext = useContext(ShopContext);
+  const cart = shopContext ? shopContext.cart : [];
+
   return (
-    <View
-      style={{
-        flex: 1,
-        justifyContent: "center",
-        alignItems: "center",
-      }}
-    >
-      <Text>Edit app/index.tsx to edit this screen.</Text>
-      <Camera color={"blue"} size={64} />
+    <View>
+      <Text>Pannier</Text>
+      <Text>{cart.length} produits dans votre pannier</Text>
     </View>
   );
 }

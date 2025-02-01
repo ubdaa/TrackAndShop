@@ -3,6 +3,7 @@ import { View, Text, Image, StyleSheet, TouchableOpacity, Dimensions } from 'rea
 import { Ionicons } from '@expo/vector-icons';
 import { Article } from '@/constants/Articles';
 import { useRouter } from 'expo-router';
+import * as Haptics from 'expo-haptics';
 
 interface ArticleCardProps {
   article: Article;
