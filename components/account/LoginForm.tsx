@@ -2,7 +2,7 @@ import { UserContext } from "@/context/UserContext";
 import { auth, db } from "@/firebaseConfig";
 import { signInWithEmailAndPassword } from "firebase/auth";
 import { useState, useContext } from "react";
-import { TextInput, StyleSheet, Alert, View, Text } from 'react-native';
+import { View, Text, TextInput, StyleSheet, Alert } from 'react-native';
 import Button from "../Button";
 import { Link, useRouter } from "expo-router";
 import { collection, getDocs } from "firebase/firestore";
@@ -35,8 +35,8 @@ export default function LoginForm() {
 
   return (
       <View style={styles.scrollContainer}>
-        <Text>Se connecter - Track & Shop</Text>
-        <Text>Accéder à votre profil</Text>
+        <Text style={styles.title}>Se connecter - Track & Shop</Text>
+        <Text style={styles.subtitle}>Accéder à votre profil</Text>
         <TextInput
           style={styles.input}
           placeholder="Email"

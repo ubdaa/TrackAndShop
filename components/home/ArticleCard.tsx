@@ -37,7 +37,7 @@ export default function ArticleCard ({ article }: ArticleCardProps) {
         <Text style={styles.description} numberOfLines={2}>{article.description}</Text>
         
         <View style={styles.priceContainer}>
-          <Text style={styles.price}>€{article.price.toFixed(2)}</Text>
+          <Text style={styles.price}>{article.price.toFixed(2)}€</Text>
           <Text style={[styles.stock, { color: article.stock < 5 ? 'red' : 'green' }]}>
             {article.stock < 5 ? 'Low stock' : 'In stock'}
           </Text>
