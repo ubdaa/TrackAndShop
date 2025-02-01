@@ -30,6 +30,7 @@ export default function Button ({
 
 const styles = StyleSheet.create({
   button: {
+    height: 50, 
     backgroundColor: '#3498db',
     paddingVertical: 12,
     paddingHorizontal: 20,
