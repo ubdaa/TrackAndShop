@@ -1,12 +1,14 @@
 import { Order } from "@/constants/Order";
-import { Timestamp } from "firebase/firestore";
+import { useRouter } from "expo-router";
 import { Trash } from "lucide-react-native";
 import { View, TouchableOpacity, Alert, StyleSheet, Image, Text } from "react-native";
 
-export default function OrderCard({ item }: { item: Order }) {
+export default function OrderCard({ order }: { order: Order }) {
+
+  const router = useRouter();
 
   const handleOrderPress = () => {
-    Alert.alert("Détails de la commande");
+    router.push({ pathname: `/order/[id]`, params: { id: order.orderId } });
   };
 
   const handleRemovePress = () => {
@@ -17,12 +19,12 @@ export default function OrderCard({ item }: { item: Order }) {
     <TouchableOpacity onPress={() => { handleOrderPress() }}>
       <View style={styles.cartItem}>
         <Image
-          source={{ uri: item.items[0].article.imageUrl }}
+          source={{ uri: order.items[0].article.imageUrl }}
           style={styles.itemImage}
         />
         <View style={styles.itemDetails}>
-          <Text style={styles.itemTitle}>Commande du {item.date.toDate().toLocaleDateString('fr-FR')} à {item.date.toDate().toLocaleTimeString('fr-FR')}</Text>
-          <Text style={styles.itemPrice}>{item.total.toFixed(2)}€</Text>
+          <Text style={styles.itemTitle}>Commande du {order.date.toDate().toLocaleDateString('fr-FR')} à {order.date.toDate().toLocaleTimeString('fr-FR')}</Text>
+          <Text style={styles.itemPrice}>{order.total.toFixed(2)}€</Text>
         </View>
         <TouchableOpacity
           style={styles.removeButton}

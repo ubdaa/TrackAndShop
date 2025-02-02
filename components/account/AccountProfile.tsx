@@ -70,7 +70,7 @@ export default function AccountProfile() {
           <FlatList
             data={orderContext.orders}
             renderItem={({ item }) => (
-              <OrderCard item={item} />
+              <OrderCard order={item} />
             )}
             keyExtractor={(item) => item.orderId}
             style={{ marginTop: 20 }}

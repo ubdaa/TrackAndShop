@@ -9,13 +9,21 @@
     "userInterfaceStyle": "automatic",
     "newArchEnabled": true,
     "ios": {
+      "config": {
+        "googleMapsApiKey": "xx"
+      },
       "supportsTablet": true
     },
     "android": {
-      "adaptiveIcon": {
-        "foregroundImage": "./assets/images/adaptive-icon.png",
-        "backgroundColor": "#ffffff"
+      "config": {
+        "googleMaps": {
+          "apiKey": "xx"
+        }
       }
+    },
+    "adaptiveIcon": {
+      "foregroundImage": "./assets/images/adaptive-icon.png",
+      "backgroundColor": "#ffffff"
     },
     "web": {
       "bundler": "metro",
