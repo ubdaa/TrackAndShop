@@ -11,6 +11,7 @@ import {
 } from "react-native";
 import { ShopContext, CartItem } from "@/context/ShopContext";
 import Button from "@/components/Button";
+import { auth } from "@/firebaseConfig";
 
 export default function Cart() {
   const shopContext = useContext(ShopContext);
@@ -25,6 +26,8 @@ export default function Cart() {
     (total, item) => total + item.article.price * item.quantity,
     0
   );
+
+  const user = auth.currentUser;
 
   const renderCartItem = ({ item }: { item: CartItem }) => {
     return (
@@ -100,7 +103,8 @@ export default function Cart() {
         <View style={styles.actionsContainer}>
           <Button
             onPress={() => Alert.alert("Fonctionnalité non implémentée")}
-            title="Payer"
+            title={!user ? "Connectez-vous pour commander" : "Commander"}
+            disabled={cart.length === 0 || !user}
           />
           <Button onPress={clearCart} title="Vider le panier" />
         </View>
