@@ -12,6 +12,7 @@ import {
 import { ShopContext, CartItem } from "@/context/ShopContext";
 import Button from "@/components/Button";
 import { auth } from "@/firebaseConfig";
+import { UserContext } from "@/context/UserContext";
 
 export default function Cart() {
   const shopContext = useContext(ShopContext);
@@ -27,7 +28,7 @@ export default function Cart() {
     0
   );
 
-  const user = auth.currentUser;
+  const user = useContext(UserContext);
 
   const renderCartItem = ({ item }: { item: CartItem }) => {
     return (
