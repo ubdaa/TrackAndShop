@@ -94,6 +94,7 @@ export default function Cart() {
         return;
       }
       await addDoc(collection(db, "orders"), {
+        orderId: Math.random().toString(36).substr(2, 9),
         userMail: auth.currentUser?.email,
         items: cart.map((item) => ({
           article: item.article,

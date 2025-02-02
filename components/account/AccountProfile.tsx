@@ -2,11 +2,15 @@ import { UserContext } from "@/context/UserContext";
 import { auth, db } from "@/firebaseConfig";
 import { useRouter } from "expo-router";
 import { signOut } from "firebase/auth";
-import { useContext } from "react";
-import { Alert, View, StyleSheet, Text } from "react-native";
+import { useContext, useEffect } from "react";
+import { Alert, View, StyleSheet, Text, FlatList } from "react-native";
 import Button from "../Button";
-import { addDoc, collection } from "firebase/firestore";
+import { addDoc, collection, getDocs } from "firebase/firestore";
 import { Articles } from "@/constants/Articles";
+import { OrderContext } from "@/context/OrderContext";
+import { Order } from "@/constants/Order";
+import { SafeAreaView } from "react-native-safe-area-context";
+import OrderCard from "./OrderCard";
 
 export default function AccountProfile() {
   const router = useRouter();
@@ -23,19 +27,64 @@ export default function AccountProfile() {
     }
   };
 
+  if (!auth.currentUser) {
+    return <Text>Utilisateur non connecté.</Text>;
+  }
+
+  const orderContext = useContext(OrderContext);
+
+  if (!orderContext) {
+    return <Text>Order context non disponible.</Text>;
+  }
+
+  const { addOrder } = orderContext;
+
+  useEffect(() => {
+    const fetchOrders = async () => {
+      const querySnapshot = await getDocs(collection(db, "orders"));
+      orderContext.clearOrders();
+      querySnapshot.forEach((doc) => {
+        const order = doc.data();
+        if (order.userMail === auth.currentUser?.email) {
+          addOrder(order as Order);
+        }
+      });
+    };
+
+    fetchOrders();
+  }, []);
+
   return (
-    <View style={styles.container}>
-      <Text style={styles.title}>Mon compte</Text>
-      <Text style={styles.subtitle}>Bienvenue {userProfile?.email}</Text>
-      <Button title="Se déconnecter" onPress={handleLogout} />
-    </View>
+    <SafeAreaView style={styles.container}>
+      <View>
+        <Text style={styles.title}>Mon compte</Text>
+        <Text style={styles.subtitle}>Bienvenue {userProfile?.email}</Text>
+        <Button title="Se déconnecter" onPress={handleLogout} />
+
+        <View style={{borderBottomWidth: 1, marginVertical: 20, borderColor: 'gray' }}></View>
+        <Text style={styles.title}>Mes commandes</Text>
+
+        {orderContext.orders.length === 0 ? (
+          <Text style={styles.subtitle}>Aucune commande passée.</Text>
+        ) : (
+          <FlatList
+            data={orderContext.orders}
+            renderItem={({ item }) => (
+              <OrderCard item={item} />
+            )}
+            keyExtractor={(item) => item.orderId}
+            style={{ marginTop: 20 }}
+          />
+        )}
+      </View>
+    </SafeAreaView>
   );
 }
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    justifyContent: 'center',
+    justifyContent: 'flex-start',
     padding: 24,
   },
   subContainer: {
