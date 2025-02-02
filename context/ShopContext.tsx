@@ -1,15 +1,5 @@
+import { Article } from '@/constants/Articles';
 import React, { createContext, useState, ReactNode } from 'react';
-
-export interface Article {
-  id: string;
-  name: string;
-  description: string;
-  price: number;
-  category: string;
-  imageUrl: string;
-  stock: number;
-  ratings: number;
-}
 
 export interface CartItem {
   article: Article;

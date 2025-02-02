@@ -1,5 +1,5 @@
 import { ShopContext } from "@/context/ShopContext";
-import { useLocalSearchParams } from "expo-router";
+import { useLocalSearchParams, useRouter } from "expo-router";
 import { useContext } from "react";
 import React, { useState } from 'react';
 import {
@@ -15,6 +15,8 @@ import { Ionicons } from "@expo/vector-icons";
 
 export default function Index() {
   const { id } = useLocalSearchParams();
+
+  const router = useRouter();
 
   const shopContext = useContext(ShopContext);
   const articles = shopContext?.articles || [];
@@ -96,7 +98,7 @@ export default function Index() {
         </View>
         <TouchableOpacity
           style={styles.addButton}
-          onPress={() => shopContext?.addToCart(article, quantity)}
+          onPress={() => { shopContext?.addToCart(article, quantity); router.replace({ pathname: '/cart' }); }}
         >
           <Text style={styles.addButtonText}>Ajouter au panier</Text>
         </TouchableOpacity>

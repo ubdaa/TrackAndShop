@@ -1,5 +1,5 @@
 import React, { useContext, useEffect, useState } from 'react';
-import { Text, View, ActivityIndicator, ScrollView, StyleSheet } from 'react-native';
+import { Text, View, ActivityIndicator, ScrollView, StyleSheet, SafeAreaView } from 'react-native';
 import { db } from '@/firebaseConfig';
 import { getDocs, collection } from 'firebase/firestore';
 import { Article } from '@/constants/Articles';
@@ -60,11 +60,13 @@ export default function Index() {
   }
 
   return (
-    <ScrollView contentContainerStyle={styles.container}>
-      {articles.map(article => (
-        <ArticleCard key={article.id} article={article} />
-      ))}
-    </ScrollView>
+    <SafeAreaView style={{ flex: 1 }}>
+      <ScrollView contentContainerStyle={styles.container}>
+        {articles.map(article => (
+          <ArticleCard key={article.id} article={article} />
+        ))}
+      </ScrollView>
+    </SafeAreaView>
   );
 }
 

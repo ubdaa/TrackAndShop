@@ -31,7 +31,6 @@ export default function AccountTab() {
       </View>
     </KeyboardAvoidingView>
   )
-
 };
 
 const styles = StyleSheet.create({
