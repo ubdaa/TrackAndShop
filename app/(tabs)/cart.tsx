@@ -11,8 +11,9 @@ import {
 } from "react-native";
 import { ShopContext, CartItem } from "@/context/ShopContext";
 import Button from "@/components/Button";
-import { auth } from "@/firebaseConfig";
+import { auth, db } from "@/firebaseConfig";
 import { UserContext } from "@/context/UserContext";
+import { addDoc, collection } from "firebase/firestore";
 
 export default function Cart() {
   const shopContext = useContext(ShopContext);
@@ -82,6 +83,33 @@ export default function Cart() {
     );
   };
 
+  const handlePayment = async () => {
+    try {
+      if (!user) {
+        Alert.alert("Connectez-vous", "Vous devez être connecté pour commander.");
+        return;
+      }
+      if (cart.length === 0) {
+        Alert.alert("Panier vide", "Ajoutez des articles à votre panier pour commander.");
+        return;
+      }
+      await addDoc(collection(db, "orders"), {
+        userMail: auth.currentUser?.email,
+        items: cart.map((item) => ({
+          article: item.article,
+          quantity: item.quantity,
+        })),
+        total: totalPrice,
+        date: new Date(),
+      });
+
+      clearCart();
+    } catch (error) {
+      console.error("Erreur de paiement :", error);
+      Alert.alert("Erreur", "Le paiement a échoué. Veuillez réessayer.");
+    }
+  };
+
   return (
     <SafeAreaView style={styles.container}>
       <View style={styles.container}>
@@ -103,7 +131,7 @@ export default function Cart() {
 
         <View style={styles.actionsContainer}>
           <Button
-            onPress={() => Alert.alert("Fonctionnalité non implémentée")}
+            onPress={handlePayment}
             title={!user ? "Connectez-vous pour commander" : "Commander"}
             disabled={cart.length === 0 || !user}
           />
