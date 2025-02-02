@@ -23,23 +23,11 @@ export default function AccountProfile() {
     }
   };
 
-  const handleDebug = async () => {
-    try {
-      Articles.forEach(async article => {
-        await addDoc(collection(db, "articles"), article);
-      });
-    } catch (error) {
-      console.error("Erreur de déconnexion :", error);
-      Alert.alert("Erreur", "La déconnexion a échoué. Veuillez réessayer.");
-    }
-  };
-
   return (
     <View style={styles.container}>
       <Text style={styles.title}>Mon compte</Text>
       <Text style={styles.subtitle}>Bienvenue {userProfile?.email}</Text>
       <Button title="Se déconnecter" onPress={handleLogout} />
-      {/* <Button title="Debug pour créer des articles" onPress={handleDebug} /> */}
     </View>
   );
 }

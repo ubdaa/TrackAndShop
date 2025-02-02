@@ -17,11 +17,10 @@ export default function SignUpForm() {
       const userCredential = await createUserWithEmailAndPassword(auth, email, password);
       const uid = userCredential.user?.uid;
       if (uid) {
-        // Sauvegarde des informations complémentaires dans Firestore (collection "users")
         await addDoc(collection(db, "users"), {
           name,
           email,
-          photoUrl: '' // Vous pouvez ajouter une URL par défaut ou permettre l'upload de photo
+          photoUrl: ''
         });
         Alert.alert("Inscription réussie", "Votre compte a été créé.");
       }

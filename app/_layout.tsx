@@ -8,7 +8,7 @@ export default function Layout() {
     <ShopProvider>
       <UserProvider>
         <Stack>
-          <Stack.Screen name="(tabs)" options={{ headerShown: false }} />  
+          <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
           <Stack.Screen
             name="product/[id]"
             options={{
